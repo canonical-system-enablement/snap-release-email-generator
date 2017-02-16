@@ -14,6 +14,7 @@ import (
 type SnapToRelease struct {
 	Name    string
 	Version string
+	Bileto  string
 	Changes []string
 }
 
@@ -77,7 +78,7 @@ regards,
 	var changelog bytes.Buffer
 	var bileto bytes.Buffer
 	for _, snap := range str {
-		bileto.WriteString("- " + snap.Name + ": BILETO URL\n")
+		bileto.WriteString("- " + snap.Name + ": " + snap.Bileto + "\n")
 		changelog.WriteString("\n")
 		changelog.WriteString(snap.Name + " " + snap.Version + ":\n")
 		changelog.WriteString("\n")
@@ -175,13 +176,18 @@ func main() {
 
 			for _, clist := range checklists {
 
-				if !strings.Contains(clist.Name, "Changes") {
-					continue
+				if strings.Contains(clist.Name, "Changes") {
+					for _, citem := range clist.CheckItems {
+						tmp.Changes = append(tmp.Changes, citem.Name)
+					}
 				}
 
-				for _, citem := range clist.CheckItems {
-					tmp.Changes = append(tmp.Changes, citem.Name)
+				if strings.Contains(clist.Name, "Bileto") {
+					for _, bitem := range clist.CheckItems {
+						tmp.Bileto = bitem.Name
+					}
 				}
+
 			}
 
 			str = append(str, tmp)
