@@ -19,8 +19,10 @@ konrad at annapurna in snap-release-email-generator (master) % cat trello_secret
 Usage
 ====
 
+```
 Usage of ./snap-release-email-generator:
   -publisher string
         Snap publisher's name (default "Simon")
   -secrets string
         Trello Secrets configuration (default "trello_secrets.json")
+```
